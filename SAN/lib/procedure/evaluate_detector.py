@@ -46,8 +46,8 @@ def evaluation_image(eval_loader, net, log, save_path, opt):
   for i, (inputs, target, mask, points, image_index, label_sign, ori_size) in enumerate(eval_loader):
 
     # inputs : Batch, Squence, Channel, Height, Width
-    target = target.cuda(async=True)
-    mask = mask.cuda(async=True)
+    target = target.cuda(non_blocking=True)
+    mask = mask.cuda(non_blocking=True)
 
     # forward, batch_locs [1 x points] [batch, 2]
     batch_cpms, batch_locs, batch_scos, generated = net(inputs)

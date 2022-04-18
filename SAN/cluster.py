@@ -102,7 +102,7 @@ def main():
     top1, losses = AverageMeter(), AverageMeter()
     resnet.train()
     for i, (inputs, target) in enumerate(cls_train_loader):
-      target = target.cuda(async=True)
+      target = target.cuda(non_blocking=True)
       # compute output
       _, output = resnet(inputs)
       loss = criterion(output, target)
@@ -124,7 +124,7 @@ def main():
     resnet.eval()
     top1, losses = AverageMeter(), AverageMeter()
     for i, (inputs, target) in enumerate(val_loader):
-      target = target.cuda(async=True)
+      target = target.cuda(non_blocking=True)
       # compute output
       with torch.no_grad():
         _, output = resnet(inputs)

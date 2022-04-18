@@ -98,10 +98,10 @@ def train(train_loader, net, criterion, optimizer, epoch, opt, log):
   for i, (inputs, target, mask, points, image_index, label_sign, _) in enumerate(train_loader):
     # inputs : Batch, Squence, Channel, Height, Width
     # data prepare
-    target = target.cuda(async=True)
+    target = target.cuda(non_blocking=True)
     # get the real mask
     mask.masked_scatter_((1-label_sign).unsqueeze(-1).unsqueeze(-1), torch.ByteTensor(mask.size()).zero_())
-    mask_var   = mask.cuda(async=True)
+    mask_var   = mask.cuda(non_blocking=True)
 
     batch_size, num_pts = inputs.size(0), mask.size(1)-1
     image_index = variable2np(image_index).squeeze(1).tolist()
